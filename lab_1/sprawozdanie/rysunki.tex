@@ -1,0 +1,251 @@
+\chapter{Rysunki}
+Wszystkie elementy dokumentu opracowanego w~systemie \LaTeX powinny wygl¹daæ jednolicie. Do wykonywania rysunków korzystamy wiêc z mechanizmów oferowanych przez dodatkowe pakiety \LaTeX a, nie do³¹czamy rysunków wykonanych jakoœciowo ró¿nych, np. wykonanych w~programie Word. Nie u¿ywamy rysunkach zapisanych w~plikach bitmapowych, lecz w~plikach wektorowych (\verb+pdf+, ew. \verb+ps+ lub \verb+eps+). Jedynym wyj¹tkiem s¹ zdjêcia.
+
+\section{Schematy blokowe}
+Do opracowania schematów blokowych najlepiej wykorzystaæ jêzyk opisu rysunków \verb+TikZ/PGF+ \cite{litTantau2015}. Przy wykonywaniu prostych rysunków po prostu opisujemy je za pomoc¹ poleceñ dodaj¹cych kolejne elementy, tzn. prostok¹ty, okrêgi, linie. Na przyk³ad, ci¹g poleceñ:
+\begin{lstlisting}[style=customlatex,frame=single] 
+\begin{figure}[b]
+\centering
+\begin{tikzpicture}
+\draw [red, semithick] (0,0) rectangle (4,3);
+\draw [orange, semithick,dashed] (1,1) rectangle (3,2);
+\draw [->,semithick] (4,1.5) -- (7,1.5);
+\draw [blue, semithick] (8,1.5) circle [radius=1];
+\node at (2,1.5) {Tekst};
+\node at (8,1.5) {$y(x)=x^2$};
+\end{tikzpicture}
+\end{figure}
+\end{lstlisting}
+pozwala narysowaæ figury geometryczne przedstawione na rys. \ref{r_tikz_przyklad}. Zwróæmy uwagê, ¿e napis oraz wzór s¹ z³o¿one aktualnie wykorzystywan¹ czcionk¹, jej wielkoœæ jest taka sama jak w~ca³ym dokumencie.
+
+\begin{figure}[b]
+\centering
+\begin{tikzpicture}
+\draw [red, semithick] (0,0) rectangle (4,3);
+\draw [orange, semithick,dashed] (1,1) rectangle (3,2);
+\draw [->,semithick] (4,1.5) -- (7,1.5);
+\draw [blue, semithick] (8,1.5) circle [radius=1];;
+\node at (2,1.5) {Tekst};
+\node at (8,1.5) {$y(x)=x^2$};
+\end{tikzpicture}
+%\caption{Przyk³adowy rysunek wykorzystany w~jêzyku \verb+TikZ/PGF+}
+\caption{Tekst Przyk³adowy rysunek wykorzystany w~jêzyku \texttt{TikZ/PGF}}
+\label{r_tikz_przyklad}
+\end{figure}
+
+Przy wiêkszych rysunkach mo¿na wykorzystaæ programy umo¿liwiaj¹ce ich przygotowanie przy wykorzystaniu œrodowiska graficznego, np. \verb+TikzEdt+ (\url{http://www.tikzedt.org/}), \verb+TpX+ (\url{http://tpx.sourceforge.net/}), \verb+ktikz+ (\url{https://www.linux-apps.com/p/1126914/}), \verb+GraTeX+ (\url{https://sourceforge.net/projects/gratex/}).
+
+Mo¿na równie¿ wykorzystaæ starsze, klasyczne pakiety \verb+picture+, \verb+epic+, \verb+eepic+. Równie¿ w~tych przypadkach mo¿na ,,rêcznie'' opisywaæ poszczególne elementy graficzne lub skorzystaæ ze œrodowiska graficznego, np. \verb+LaTeXPiX+ (\url{http://latexpix.software.informer.com/}), które znacznie przyspiesza pracê. Inne narzêdzia, umo¿liwiaj¹ce opracowanie rysunków wysokiej jakoœci, to \verb+METAPOST+ oraz \verb+PSTricks+.
+
+\section{Funkcje statyczne}
+Do wykonywania wykresów prezentuj¹cych wyniki symulacji i~eksperymentów stosuje siê pakiet \verb+PGFPLOTS+ \cite{litFeuersanger2016}. Za³ó¿my, ¿e w~katalogu \verb+rysunki/dane_stat+ znajduje siê plik \verb+dane_fx.txt+ zawieraj¹cy w~pierwszej kolumnie wartoœci argumentu $x$, natomiast w~drugiej kolumnie wartoœci funkcji $f(x)$
+\begin{lstlisting}[style=customlatex,frame=single]
+  -10.0000 -808.7350
+   -9.0000 -696.4791
+   -8.0000 -539.7850
+   -7.0000 -386.1268
+   -6.0000 -291.5881
+   -5.0000 -267.6436
+   -4.0000 -268.9551
+   -3.0000 -233.3995
+   -2.0000 -137.5303
+   -1.0000  -16.4788
+         0   70.0000
+    1.0000   94.1212
+    2.0000   87.2697
+    3.0000  112.8005
+    4.0000  209.4449
+    5.0000  357.3564
+    6.0000  498.0119
+    7.0000  589.6732
+    8.0000  647.4150
+    9.0000  730.9209
+   10.0000  891.2650
+\end{lstlisting}
+oraz podobny plik \verb+dane_gx.txt+, definiuj¹cy funkcjê $g(x)$. Aby narysowaæ te funkcje stosuje siê polecenia:
+\begin{lstlisting}[style=customlatex,frame=single]
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+width=0.5\textwidth,
+xmin=-10,xmax=10,ymin=-1000,ymax=1000,
+xlabel={$x$},
+ylabel={$f(x), \ g(x)$},
+xtick={-10,-5,0,5,10},
+ytick={-1000,-500,0,500,1000},
+legend pos=south east,
+y tick label style={/pgf/number format/1000 sep=},
+]
+\addplot[red, semithick]                file {rysunki/dane_stat/dane_fx.txt};
+\addplot[blue,semithick,densely dashed] file {rysunki/dane_stat/dane_gx.txt};
+\legend{$f(x)$,$g(x)$}
+\end{axis}
+\end{tikzpicture}
+\caption{Przyk³adowy rysunek funkcji $f(x)$ i~$g(x)$ wykonany 
+w~jêzyku \texttt{PGFPLOTS}}
+\label{r_pgfplots_funkcje}
+\end{figure}
+\end{lstlisting}
+Otrzymany rezultat przedstawiono na rys.~\ref{r_pgfplots_funkcje}. Istnieje mo¿liwoœæ ustawienia wielkoœci czcionek liczb umieszczonych: na osiach (\verb+tick label style+), w~oznaczeniach osi (\verb+label style+), w~legendzie (\verb+legend style+) oraz w~tytule rysunku (\verb+title style+). Przyk³adowa konfiguracja zmieniaj¹ca wielkoœæ czcionek jest nastêpuj¹ca:
+\begin{lstlisting}[style=customlatex,frame=single]
+\pgfplotsset{
+tick label style={font=\tiny},
+label style={font=\footnotesize},
+legend style={font=\footnotesize},
+title style={font=\footnotesize}
+}
+\end{lstlisting}
+
+\begin{figure}[tb]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+width=0.5\textwidth,
+xmin=-10,xmax=10,ymin=-1000,ymax=1000,
+xlabel={$x$},
+ylabel={$f(x), \ g(x)$},
+xtick={-10,-5,0,5,10},
+ytick={-1000,-500,0,500,1000},
+legend pos=south east,
+y tick label style={/pgf/number format/1000 sep=},
+]
+\addplot[red, semithick]                file {rysunki/dane_stat/dane_fx.txt};
+\addplot[blue,semithick,densely dashed] file {rysunki/dane_stat/dane_gx.txt};
+\legend{$f(x)$,$g(x)$}
+\end{axis}
+\end{tikzpicture}
+\caption{Przyk³adowy rysunek funkcji $f(x)$ i~$g(x)$ wykonany w~jêzyku \texttt{PGFPLOTS} (rysunek jest kompilowany przy ka¿dym przetworzenia pliku Ÿród³owego}
+\label{r_pgfplots_funkcje}
+\end{figure}
+
+Opisany sposób implementacji rysunków jest poprawny, ale ma powa¿n¹ wadê, poniewa¿ \LaTeX{}   potrzebuje doœæ du¿o czasu na ich przetworzenie. Okazuje siê to du¿ym mankamentem szczególnie wówczas, gdy w~dokumencie znajduje siê du¿o skomplikowanych rysunków. Skutecznym rozwi¹zaniem jest przygotowanie rysunków i~zapis ich do plików \verb+pdf+, a~nastêpnie do³¹czenie ich do g³ównego dokumentu poleceniem \verb+\includegraphics+. Plik \verb+zapisz_pdf_funkcje.tex+, umo¿liwiaj¹cy zapisanie rysunku do pliku \verb+funkcje.pdf+, znajduje siê w~katalogu \verb+rysunki/zapisz_pdf+ i~ma nastêpuj¹c¹ postaæ:
+\lstinputlisting[style=customlatex,frame=single]{rysunki/zapisz_pdf/zapisz_pdf_funkcje.tex}
+
+Polecenie
+\begin{lstlisting}[style=customlatex,frame=single]
+pdflatex -shell-escape zapisz_pdf_funkcje.tex
+\end{lstlisting}
+zapisuje plik \verb+funkcje.pdf+. Umieszczaj¹c wiele definicji rysunków w~jednym pliku Ÿród³owym mo¿na  generowaæ wiele rysunków w~postaci plików \verb+pdf+.
+
+Przy du¿ych zbiorach danych \LaTeX{} zg³asza b³¹d pamiêci. Nale¿y wówczas zastosowaæ \hbox{Lua\LaTeX}. Rysunek do³¹cza siê do dokumentu ci¹giem instrukcji:
+\begin{lstlisting}[style=customlatex,frame=single]
+\begin{figure}[tb]
+\centering
+\includegraphics[scale=1]{pgfplots_pdf/funkcje}
+\caption{Przyk³adowy rysunek funkcji $f(x)$ i~$g(x)$ wykonany
+w~jêzyku \texttt{PGFPLOTS}}
+\label{r_pgfplots_funkcje}
+\end{figure}
+\end{lstlisting}
+Otrzymany rezultat przedstawiono na rys.~\ref{r_pgfplots_funkcje_pdf}. Oczywiœcie, rysunki \ref{r_pgfplots_funkcje} i~\ref{r_pgfplots_funkcje_pdf} s¹ bardzo podobne, jedyn¹ ró¿nic¹ jest wielkoœæ czcionek.
+
+Nie nale¿y skalowaæ rysunku, gdy¿ zmieni to wielkoœæ zastosowanej czcionki. Je¿eli zachodzi koniecznoœæ zmiany wielkoœci rysunku, nale¿y zmodyfikowaæ plik Ÿród³owy generuj¹cy rysunek.
+
+Je¿eli rysunek jest szerszy ni¿ szerokoœæ strony, nale¿y zastosowaæ otoczenie \verb+sidewaysfigure+ z~pakietu \verb+rotating+, które dzia³a analogicznie jak otoczenie \verb+sidewaystable+.
+
+W~bardzo podobny sposób przygotowuje siê rysunki trójwymiarowe \cite{litFeuersanger2016}.
+
+\begin{figure}[ptb]
+\centering
+\includegraphics[scale=1]{rysunki/zapisz_pdf/funkcje}
+\caption{Przyk³adowy rysunek funkcji $f(x)$ i~$g(x)$ wykonany
+w~jêzyku \texttt{PGFPLOTS} i~zapisany w~pliku \texttt{funkcje.pdf}}
+\label{r_pgfplots_funkcje_pdf}
+\end{figure}
+
+\section{Wyniki symulacji i~eksperymentów}
+Za³ó¿my, ¿e w~katalogu \verb+rysunki/symulacje11+ znajduje siê plik \verb+yzad.txt+ zawieraj¹cy w~pierwszej kolumnie pomiary czasu $t$ (w~sekundach), natomiast w~drugiej kolumnie próbki sygna³u wartoœci zadanej $y^{\mathrm{zad}}$. Wykonano symulacje algorytmu regulacji GPC przy piêciu ró¿nych wartoœciach parametru $\lambda$: $\num{0,1}$, $\num{0,2}$, $\num{0,5}$, $\num{1}$ i~$\num{2}$. Przebiegi sygna³u steruj¹cego $u$ zapisano w~plikach \verb+u_lambda_0_1.txt+, \verb+u_lambda_0_2.txt+, \verb+u_lambda_0_5.txt+, \verb+u_lambda_1.txt+ i~\verb+u_lambda_2.txt+, natomiast przebiegi sygna³u wyjœciowego procesu $y$ zapisano w~plikach \verb+y_lambda_0_1.txt+, \verb+y_lambda_0_2.txt+, \verb+y_lambda_0_5.txt+, \verb+y_lambda_1.txt+ i~\verb+y_lambda_2.txt+. Przygotowano plik \verb+zapisz_pdf_symulacje11.tex+, umo¿liwiaj¹cy zapisanie rysunku do pliku \verb+symulacje11.pdf+. Znajduje siê on w~katalogu \verb+rysunki/zapisz_pdf+ i~ma nastêpuj¹c¹ postaæ:
+
+\lstinputlisting[style=customlatex,frame=single]{rysunki/zapisz_pdf/zapisz_pdf_symulacje11.tex}
+Polecenie
+\begin{lstlisting}[style=customlatex,frame=single]
+pdflatex -shell-escape zapisz_pdf_symulacje11.tex
+\end{lstlisting}
+zapisuje plik \verb+symulacje11.pdf+. Rysunek do³¹cza siê do dokumentu instrukcj¹ \verb+\includegraphics+. Efekt przedstawiono na rys.~\ref{r_pgfplots_symulacje11_pdf}. Zwróæmy uwagê, ¿e do narysowania wyników symulacji dla kolejnych wartoœci parametru $\lambda$ zastosowano ró¿ne kolory oraz ró¿ne style linii (linia ci¹g³a, linia przerywana, itd.). Umo¿liwia to ³atwe rozró¿nienie dokumentów na czarno-bia³ym wydruku. Przy wydruku kolorowym oraz dokumentach elektronicznych mo¿na zrezygnowaæ ze stosowania ró¿nych stylów linii, do ich rozró¿nienia wystarczaj¹ce s¹ kolory, pod warunkiem jednak, ¿e kolejne krzywe nie s¹ po³o¿one bardzo blisko siebie.
+
+Pakiet \verb+PGFPLOTS+ mo¿na skonfigurowaæ w~taki sposób, aby na osiach stosowane by³y liczby z~przecinkiem dziesiêtnym w~miejsce kropki dziesiêtnej \cite{litFeuersanger2016}.
+
+Czasami ze wzglêdu na ograniczon¹ objêtoœæ dokumentu nale¿y zmniejszyæ rysunki. Aby zmniejszyæ objêtoœæ mo¿na zastosowaæ u³o¿enie poziome dwóch rysunków, prezentuj¹cych wyniki symulacji procesu. Przygotowano plik \verb+zapisz_pdf_symulacje11_wersja2.tex+, umo¿liwiaj¹cy zapisanie rysunku do pliku \verb+symulacje11_wersja2.pdf+. Znajduje siê on w~katalogu \verb+rysunki/zapisz_pdf+ i~ma nastêpuj¹c¹ postaæ:
+\lstinputlisting[style=customlatex,frame=single]{rysunki/zapisz_pdf/zapisz_pdf_symulacje11_wersja2.tex}
+Rysunek do³¹cza siê do dokumentu instrukcj¹ \verb+\includegraphics+. Efekt przedstawiono na rys.~\ref{r_pgfplots_symulacje11_wersja2_pdf}.
+
+\begin{figure}[tb]
+\centering
+\includegraphics[scale=1]{rysunki/zapisz_pdf/symulacje11}
+%\includegraphics[scale=1]{rysunki/zapisz_pdf/symulacje11}
+\caption{Przyk³adowy rysunek wyników symulacji procesu jednowymiarowego wykonany
+w~jêzyku \texttt{PGFPLOTS} i~zapisany w~pliku \texttt{symulacje11.pdf}}
+\label{r_pgfplots_symulacje11_pdf}
+\end{figure}
+
+\begin{figure}[tb]
+\centering
+\includegraphics[scale=1]{rysunki/zapisz_pdf/symulacje11_wersja2}
+\caption{Przyk³adowy rysunek wyników symulacji procesu jednowymiarowego wykonany
+w~jêzyku \texttt{PGFPLOTS} i~zapisany w~pliku \texttt{symulacje11\_wersja2.pdf}}
+\label{r_pgfplots_symulacje11_wersja2_pdf}
+\end{figure}
+
+Za³ó¿my, ¿e w~katalogu \verb+rysunki/symulacje22+ znajduj¹ siê wyniki symulacji procesu o~dwóch wejœciach i~dwóch wyjœciach zapisane w~plikach: \verb+yzad1.txt+, \verb+yzad2.txt+, \verb+u1.txt+, \verb+u2.txt+, \verb+y1.txt+, \verb+y2.txt+. W~pierwszej kolumnie tych plików podano czas $t$ (w~sekundach), natomiast w~drugiej kolumnie wartoœæ odpowiedniej zmiennej. Plik \verb+zapisz_pdf_symulacje22.tex+, umo¿liwiaj¹cy zapisanie rysunku do pliku \verb+symulacje22.pdf+ znajduje siê w~katalogu \verb+rysunki/zapisz_pdf+ i~ma nastêpuj¹c¹ postaæ:
+\lstinputlisting[style=customlatex,frame=single]{rysunki/zapisz_pdf/zapisz_pdf_symulacje22.tex}
+Rysunek do³¹cza siê do dokumentu instrukcj¹ \verb+\includegraphics+. Efekt przedstawiono na rys.~\ref{r_pgfplots_symulacje22_pdf}.
+
+Aby zmniejszyæ objêtoœæ mo¿na nieco inaczej u³o¿yæ 4 rysunki, prezentuj¹ce wyniki symulacji procesu dwuwymiarowego. Przygotowano plik \verb+zapisz_pdf_symulacje22_wersja2.tex+, umo¿liwiaj¹cy zapisanie rysunku do pliku \verb+symulacje22_wersja2.pdf+. Znajduje siê on w~katalogu \verb+rysunki/zapisz_pdf+ i~ma nastêpuj¹c¹ postaæ:
+\lstinputlisting[style=customlatex,frame=single]{rysunki/zapisz_pdf/zapisz_pdf_symulacje22_wersja2.tex}
+Rysunek do³¹cza siê do dokumentu instrukcj¹ \verb+\includegraphics+. Efekt przedstawiono na rys.~\ref{r_pgfplots_symulacje22_wersja2_pdf}.
+
+\begin{figure}[p]
+\centering
+\includegraphics[scale=1]{rysunki/zapisz_pdf/symulacje22}
+\caption{Przyk³adowy rysunek wyników symulacji procesu dwuwymiarowego wykonany
+w~jêzyku \texttt{PGFPLOTS} i~zapisany w~pliku \texttt{symulacje22.pdf}}
+\label{r_pgfplots_symulacje22_pdf}
+\end{figure}
+
+\begin{figure}[b]
+\centering
+\includegraphics[scale=1]{rysunki/zapisz_pdf/symulacje22_wersja2}
+\caption{Przyk³adowy rysunek wyników symulacji procesu dwuwymiarowego wykonany
+w~jêzyku \texttt{PGFPLOTS} i~zapisany w~pliku \texttt{symulacje22\_wersja2.pdf}}
+\label{r_pgfplots_symulacje22_wersja2_pdf}
+\end{figure}
+
+\section{Kolory}
+Przy umieszczaniu kilku wykresów na tym samym rysunku nale¿y zastosowaæ kolory ró¿ni¹ce siê od siebie w~znacznym stopniu, nie mo¿na stosowaæ kolorów podobnych, np. kilku odcieni tego samego koloru. Do generacji palety kolorów spe³niaj¹cej takie wymagania mo¿na u¿yæ funkcji \verb+distinguishable_colors.m+, udostêpnionej na stronie \url{https://www.mathworks.com/matlabcentral/}. Zestaw dwudziestu kolorów zosta³ przedstawiony na rys.~\ref{r_zestaw_kolorow}. Ich definicja w~palecie RGB jest nastêpuj¹ca:
+\begin{lstlisting}[style=customlatex,frame=single]
+         0         0    1.0000
+    1.0000         0         0
+         0    1.0000         0
+         0         0    0.1724
+    1.0000    0.1034    0.7241
+    1.0000    0.8276         0
+         0    0.3448         0
+    0.5172    0.5172    1.0000
+    0.6207    0.3103    0.2759
+         0    1.0000    0.7586
+         0    0.5172    0.5862
+         0         0    0.4828
+    0.5862    0.8276    0.3103
+    0.9655    0.6207    0.8621
+    0.8276    0.0690    1.0000
+    0.4828    0.1034    0.4138
+    0.9655    0.0690    0.3793
+    1.0000    0.7586    0.5172
+    0.1379    0.1379    0.0345
+    0.5517    0.6552    0.4828
+\end{lstlisting}
+\definecolor{kolor5}{rgb}{1.0000,0.1034,0.7241}
+Oprócz kolorów standardowych oraz dodatkowych, które s¹ zdefiniowane w~pakiecie \verb+xcolor+, w³asne kolory definiujemy poleceniem \verb+\definecolor+. Na przyk³ad, pi¹ty kolor z~zestawu definiujemy poleceniem \verb+\definecolor{kolor5}{rgb}{1.0000,0.1034,0.7241}+, {\color{kolor5}co umo¿liwia osi¹gniêcie nastêpuj¹cego efektu}.
+
+\begin{figure}[b]
+\centering
+\includegraphics[width=0.75\textwidth,height=0.1\textheight]{rysunki/kolory}
+\caption{Paleta 20 kolorów}
+\label{r_zestaw_kolorow}
+\end{figure}
+
+\section{Lokalizacja rysunków (i~tabel)}
+Wszystkie rysunki i~tabele umieszczamy jako ,,p³ywaj¹ce", a~wiêc w otoczeniu \verb+figure+ oraz \verb+table+ nie stosujemy opcji \verb+[h]+ i~\verb+[H]+. Aby unikn¹æ umieszczenia rysunków w~tekœcie kolejnego rozdzia³u nale¿y zastosowaæ polecenie \verb+\FloatBarrier+ z~pakietu \verb+placeins+.
+
+

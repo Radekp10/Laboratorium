@@ -1,0 +1,124 @@
+\newlength\fwidth
+\newlength\fheight
+
+\chapter{Uwagi do wykonywania sprawozdañ}
+\section{Kodowanie znaków}
+Aktualnie kodowanie znaków ustawione jest na cp1250 (czasem oznaczane jako windows-1250). Wiele programów dokonuje automatycznej analizy dokumentu otwieranego i na podstawie jego zawartoœci odgaduje jakie kodowanie powinno zostaæ zastosowane dla danego pliku. O ile przyk³adowo TeXstudio (dobre IDE na pocz¹tek) nie ma problemów z automatycznym okreœleniem kodowania dla pliku \verb|sprawozdanie_szablon.tex|, poniewa¿ rozpoznaje np. zawart¹ w nim linijkê \verb|\usepackage[cp1250]{inputenc}|, o tyle pozosta³e pliki tej linijki nie zawieraj¹, co powoduje czêsto b³êdnie odgadniête kodowanie. Aby wskazaæ dla danego pliku jakie kodowanie ma zostaæ u¿yte, mo¿na wstawiæ na poczatku tego pliku linijkê o treœci \newline\verb|% !TEX encoding = cp1250|\newline która spowoduje wymuszenie u¿ycia tego w³aœnie kodowania w tym pliku.
+
+Oczywiœcie ewentualne przejœcie na kodowanie UTF-8 wymagaæ bêdzie:
+\begin{itemize}
+	\item zmiany linijki \verb|\usepackage[cp1250]{inputenc}| na \verb|\usepackage[utf8]{inputenc}|,
+	\item zmiany kodowania w poszczególnych plikach z kodowania cp1250 na UTF-8,
+	\item ewentualn¹ zmianê linijek \verb|% !TEX encoding = cp1250| na \verb|% !TEX encoding = utf8|.
+\end{itemize}
+Warto na koniec przekompilowaæ wszelkie pliki, aby nie by³o problemów ze spójnoœci¹, a wiêc w szczególnoœci wyrzuciæ wszystki pliki o rozszerzeniu \verb|.aux| i \verb|.pdf|.
+
+\section{Nie nale¿y u¿ywaæ zwrotów w cudzys³owiu i narzekañ}
+Potrzeba u¿ycia wyra¿enia otoczonego znakami ,, oraz '' (proszê nie stosowaæ amerykañskiej formy cudzys³owiu!) sugeruje, ¿e pisz¹cy nie zna poprawnego okreœlenia opisywanego zjawiska. W takim wypadku nale¿y zg³êbiæ k³opotliwy temat lub w szczególnoœci poprosiæ o pomoc prowadz¹cego.
+
+Równie¿ nale¿y unikaæ zrzucania winy za niewykonanie zadañ na:
+\begin{itemize}
+	\item ograniczony czas trwania laboratorium,
+	\item b³êdy we w³asnym kodzie, których znalezienie trwa³o zbyt d³ugo,
+	\item zbyt du¿¹ liczbê zadañ do wykonania,
+	\item niedzia³aj¹cy sprzêt,
+	\item zaskakuj¹ce dzia³anie programu, którego nikt siê nie spodziewa³,
+	\item itp.
+\end{itemize} 
+
+Jeœli maj¹ Pañstwo jakieœ problemy z oprogramowaniem/sprzêtem, to nale¿y to zg³osiæ prowadz¹cemu laboratorium. Nie mniej sprzêt jest testowany przed zajêciami -- w tym aspekcie problemów byæ nie powinno. 
+
+Odwiedzanie prowadz¹cego w ramach konsultacji jest wysoce wskazane i zalecane. Warto korzystaæ tak¿e z kontaktu mailowego -- wiele prostych problemów mo¿na rozwi¹zaæ t¹ drog¹.
+
+\section{Przecinki zamiast kropek i jednostki}
+Stosowanie jêzyka polskiego wymusza na autorze sprawozdania przestrzeganie podstawowych zasad. Jedn¹ z czêsto ignorowanych regu³ jest stosowanie przecinka zamiast kropki do oddzielenia czêœci ca³kowitej liczby rzeczywistej od jej czêœci u³amkowej. Ma to du¿y wp³yw na estetykê sprawozdania.
+\begin{center}
+\begin{tabular}{llc}
+	zapis w \LaTeX & efekt & czy poprawne? \\ \hline
+	\verb+$12.345$+ & $12.345$ & nie \\
+	\verb+$12,345$+ & $12,345$ & nie \\
+	\verb+$\num{12.345}$+ & $\num{12.345}$ & \textbf{tak} \\
+	\verb+$\num{12,345}$+ & $\num{12,345}$ & \textbf{tak} \\
+\end{tabular}
+\end{center}
+
+Ciekawe efekty pojawiaj¹ siê przy wymienianiu ró¿nych wartoœci parametrów w jednym zdaniu, np. 
+\newline\noindent,,Do testowania zastosowane zosta³y okresy próbkowania $0,01$, $0,1$, $1$, $10$ oraz $100$ sekund.''
+
+Przy okazji warto zwróciæ uwagê na zapis jednostek:
+
+\begin{center}
+\begin{tabular}{llc}
+	zapis w \LaTeX & efekt & czy poprawne? \\ \hline
+	\verb+$\num{12.345}\mu s$+ & $\num{12.345}\mu s$ & nie \\
+	\verb+$\SI{12.345}{\micro s}$+ & $\SI{12.345}{\micro s}$ & \textbf{tak} \\
+	\verb+$\num{12.345}\ \mu s$+ & $\num{12.345}\ \mu s$ & nie \\
+\end{tabular}
+\end{center}
+
+Nawyk pisania kropek zamiast przecinków w liczbach rzeczywistych czêsto wywodzi siê ze stylu narzuconego przez jêzyk programowania i dlatego mo¿na go zachowaæ tylko w listingach -- w sprawozdaniu i na wykresie koniecznie nale¿y stosowaæ przecinki.
+
+\section{Prosty eksport wykresów: \texttt{matlab2tikz}}
+Poprzez wywo³anie skryptu:
+\lstinputlisting[style=Matlab-editor]{./skrypty/wykresy_z_matlaba.m}
+
+a nastêpnie u¿ycie w \LaTeX-u polecenia \lstinline[language=tex]|\input{./skrypty/wykres_tex.tex}| powoduje wstawienie gotowego wykresu:
+
+\begin{center}
+	\input{./skrypty/wykres_tex.tex}
+\end{center}
+
+Warto zauwa¿yæ, ¿e mimo, i¿ w MATLAB-ie znakiem oddzielaj¹cym czêœæ ca³kowit¹ od czêœci u³amkowej jest kropka, to w sprawozdaniu zast¹piona ona zosta³a przecinkiem. Jest to wynikiem dzia³ania jednej z linijek znajduj¹cych siê w preambule, które na sta³e konfiguruj¹ pakiet PGFPlots tak, aby przy ka¿dej mo¿liwej okazji liczby formatowa³ zgodnie z polskimi standardami.
+
+Aby osi¹gn¹æ powy¿szy efekt nale¿y zaopatrzyæ siê skrypt dostêpny pod adresem:
+\url{https://www.mathworks.com/matlabcentral/fileexchange/22022-matlab2tikz-matlab2tikz}
+a nastêpnie przenieœæ zawartoœæ znajduj¹cego siê w œci¹gniêtej paczce katalogu \verb|src| do katalogu, gdzie MATLAB bêdzie móg³ go odnaleŸæ. Warto utworzyæ katalog \verb|<MATLAB_ROOT>/toolbox/matlab2tikz| (gdzie \verb|<MATLAB_ROOT>| jest œcie¿k¹ do katalogu gdzie zainstalowany jest MATLAB), skopiowaæ doñ zawartoœæ katalogu \verb|src|, a nastêpnie dodaæ powy¿szy katalog do listy œcie¿ek MATLAB-a (np. klikaj¹c zak³adkê \verb|HOME| i przycisk \verb|SetPath| w MATLAB-ie).
+
+\textbf{UWAGA:} MATLAB 2017b automatycznie dodaje do wykresów legendê (MATLAB 2017a tego nie robi). Dla zainteresowanych rozwi¹zaniem tego problemu, link\newline \url{https://github.com/matlab2tikz/matlab2tikz/issues/1006}
+
+\section{Wstawianie kodu programu i jego zasadnoœæ}
+Kod programu bêd¹cego implementacj¹ algorytmu wykorzystanego do realizacji zadañ laboratoryjnych lub projektowych musi byæ dobrze opisany. Opis kodu mo¿e byæ zawarty w komentarzach bêd¹cych czêœci¹ listingu lub zostaæ dodany jako osobny fragment tekstu. Podstaw¹ oceny jest sprawozdanie, w zwi¹zku z czym kod do³¹czony do sprawozdania w postaci osobnych plików czêsto nie jest czytany -- jego treœæ s³u¿y najczêœciej do ustalenia samodzielnoœci pracy.
+
+\section{Warunki stosowania \texttt{plot} i \texttt{stairs}}
+\verb+plot+ -- ³¹czy kolejne punkty odcinkiem. Wykorzystuje siê przy prezentacji wyników, których pomiar dokonywany jest w dyskretnych chwilach, lecz wartoœci sygna³u zmieniaj¹ siê w sposób ci¹g³y a nie skokowy. Przyk³ad: wykres przebiegu pozycji obiektu w czasie.
+\begin{center}
+	\setlength\fwidth{0.5\textwidth}
+	\setlength\fheight{0.35\textwidth}
+	\input{./skrypty/plot.tex}
+\end{center}
+
+\verb+stairs+ -- ³¹czy kolejne punkty odcinkami równoleg³ymi do osi. Wykorzystuje siê przy prezentacji wyników, których pomiar dokonywany jest w dyskretnych chwilach, lecz wartoœci sygna³u zmieniaj¹ siê w sposób skokowy a nie ci¹g³y. Przyk³ad: wykres sygna³u okresowo zmieniaj¹cego siê generowanego przez sterownik programowalny.
+\begin{center}
+	\setlength\fwidth{0.5\textwidth}
+	\setlength\fheight{0.35\textwidth}
+	\input{./skrypty/stairs.tex}
+\end{center}
+
+\section{Dodatkowe uwagi do wykresach}
+Umiejêtnoœæ prezentacji wyników rzutuje na to jak sprawozdanie zostanie odebrane i w szczególnoœci zrozumiane. W zwi¹zku z tym:
+\begin{itemize}
+	\item aby porównaæ przebiegi czasowe mo¿na wyœwietliæ wiele przebiegów na jednym wykresie -- pod warunkiem, ¿e dotycz¹ tego samego sygna³u lub sygna³ów porównywalnych ze sob¹ (np. ró¿ne przebiegi sygna³u wyjœciowego w zale¿noœci od zastosowanego parametru),
+	\item aby porównaæ przebiegi czasowe mo¿na wyœwietliæ je jeden nad drugim na ró¿nych wykresach -- pod warunkiem, ¿e skala czasu jest identyczna, a skala osi pionowej jest ró¿na na obu wykresach.
+\end{itemize}
+Kombinacje oraz inne podejœcia s¹ oczywiœcie równie¿ dopuszczalne -- nale¿y jednak mieæ na uwadze, ¿e najistotniejsza jest tutaj czytelnoœæ. Czytelnik nie mo¿e domyœlaæ siê intencji autora -- nale¿y za³o¿yæ, ¿e zawsze domyœli siê ich niepoprawnie.
+
+Proszê nie obawiaæ siê, ¿e sprawozdanie bêdzie zbyt d³ugie -- nie s¹ one drukowane, a sprawdzaj¹cy nie studiuje ka¿dego rysunku z osobna. Zamieszczenie nadmiarowych rysunków czêsto jest bardziej op³acalne ni¿ zaprezentowanie zbyt ma³ej ich liczby -- skutkuje to brakiem istotnych informacji (wykresów) w sprawozdaniu. Tak¿e jeœli wykresy s¹ do siebie podobne, to warto je zaprezentowaæ -- wskazanie skrajnych podobieñstw wykresów jest czêsto bardzo istotnym wnioskiem.
+
+\section{Przeprowadzanie eksperymentów}
+Eksperymenty przed ich przeprowadzeniem powinny zostaæ zaplanowane. Jeœli etap planowania zostanie pominiêty mo¿e spowodowaæ, ¿e zabraknie czasu na realizacjê wszystkich zadañ w ramach laboratorium. Plan eksperymentu powinien tak¿e uwzglêdniaæ okreœlenie oczekiwanych rezultatów lub celów, np.:
+
+\paragraph{Przebieg eksperymentu:} Wykonanie pojedynczej skokowej zmiany wartoœci sterowania.
+\paragraph{Oczekiwany rezultat:} Pomiary sygna³u wyjœciowego bêd¹ce podstaw¹ do wyznaczenia odpowiedzi skokowej. Pomiary powinny ustabilizowaæ siê po skoñczonej liczbie pomiarów.
+
+W sprawozdaniu nie ma potrzeby wypisywania eksperymentów tak jak wy¿ej, lecz dla usprawnienia w³asnej pracy warto przygotowaæ sobie takie uproszczone opisy.
+
+\section{Krytyczne podejœcie do omówienia wyników}
+Podstawowym celem tych zajêæ jest implementacja teoretycznie wspania³ych algorytmów regulacji do rzeczywistych obiektów. Spodziewaæ siê wiêc nale¿y, ¿e teoria nie zawsze bêdzie doskonale pokrywa³a siê z praktyk¹. W takich sytuacjach nale¿y wskazaæ rozbie¿noœæ i wyci¹gn¹æ wnioski z czego ona wynika. Ignorowanie zaskakuj¹cych rezultatów jest niedopuszczalne.
+
+Wszelkie zadania zawieraj¹ce s³owo ,,zaimplementuj'' wymagaj¹ omówienia implementacji, a nie zdania ,,Zosta³o zaimplementowane.'' Wszelkie zadania zawieraj¹ce s³owo ,,dobierz'' wymagaj¹ omówienia sposobu doboru wartoœci i w szczególnoœci ich oceny pozwalaj¹cej na porównania ich z pozosta³ymi wartoœciami.
+
+\section{Nieustanna archiwizacja i oddelegowana w czasie analizy}
+Warto mieæ œwiadomoœæ z istnienia w MATLAB-ie funkcji o nazwie \verb+save+, która zapisuje wszystkie istniej¹ce w chwili zapisu zmienne do pliku MATLAB-owego. Pozwala to przede wszystkim na lepsz¹ organizacjê pracy -- na laboratorium nale¿y przeprowadziæ eksperymenty i zebraæ wyniki, a ich analizê warto od³o¿yæ na czas po laboratorium. W szczególnoœci warto sprawdziæ czy uzyskane wyniki pokrywaj¹ siê z rezultatami osi¹gniêtymi w ramach projektu -- oczywiœcie mowa o zale¿noœciach i relacjach a nie o dok³adnych wartoœciach.
+
+\section{Omówienie wyników a dobieranie parametrów}
+Proszê nie poœwiêcaæ przesadnie du¿o czasu na poszukiwanie idealnych parametrów algorytmu regulacji. Pierwszym powodem jest to, ¿e takich najczêœciej nie ma, a drugim jest fakt, i¿ nie jest tak bardzo istotna jakoœæ regulacji osi¹gniêta w ramach Pañstwa poszukiwañ, a raczej zastosowana metodologia i ogólnie rozumiane podejœcie. Bardziej wartoœciowe jest omówienie ewentualnych dalszych kroków maj¹cych na celu znalezienie lepszych parametrów regulacji ni¿ faktyczne ich poszukiwanie. Proszê jednak rozs¹dnie dobieraæ liczbê eksperymentów, po której Pañstwo przerw¹ poszukiwania -- oczywistym jest, ¿e jeden eksperyment to za ma³o, ¿eby mówiæ o jakiejkolwiek tendencji, na podstawie której mo¿naby wyci¹gaæ wnioski o dalszych krokach, natomiast 100 eksperymentów to zdecydowanie za wiele.

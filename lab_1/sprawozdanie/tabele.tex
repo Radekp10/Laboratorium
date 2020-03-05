@@ -1,0 +1,182 @@
+\chapter{Tabele}
+W~praktyce bardzo czêsto nale¿y wyrównaæ liczby wzglêdem cyfr znacz¹cych w~poszczególnych kolumnach (czyli przecinek dziesiêtny ma byæ we wszystkich wierszach tabeli umieszczony w~tym samym miejscu w~pionie). Do wyrównania liczb mo¿na wykorzystaæ pakiet \verb+siunitx+, co zastosowano w tab.~\ref{t_wyrownanie_do_znaku_przecinek3} (pakiety \verb+rccol+ oraz \verb+dcolumn+ maj¹ mniejsze mo¿liwoœci).
+
+Je¿eli tabela jest szersza ni¿ szerokoœæ strony, nale¿y zastosowaæ otoczenie \verb+sidewaystable+ z~pakietu \verb+rotating+, co wykorzystano w~tab.~\ref{t_wyrownanie_do_znaku_przecinek4}.
+
+W~zamieszczonych tabelkach wykorzystano polecenie \verb+\rule+ do wstawienia linii o~zerowej szerokoœci do wierszy tabelek, które s¹ zbyt w¹skie.
+
+Je¿eli standardowa szerokoœæ kolumn jest za ma³a, nale¿y w~dowolnym wierszu wstawiæ z~obu stron zawartoœci komórki polecenia \verb+\hspace{odleg³oœæ}+, które zapewniaj¹ odpowiedni¹ szerokoœæ. Modyfikacjê tak¹ zastosowano w~drugiej kolumnie tab.~\ref{t_wyrownanie_do_znaku_przecinek3}.
+
+%\begin{table}
+%[b] \caption{Porównanie liczby parametrów~(LP) i~dok³adnoœci~(SSE) modeli}
+%\label{t_wyrownanie_do_znaku_przecinek1}
+%\centering
+%\begin{small}
+%\begin{tabular}{|l|c|r @{$,$} l|r @{$,$} l|r @{$,$} l|}
+%\hline
+%\multicolumn{1}{|c|}{Model\rule{0pt}{3.5mm}} & LP &
+%\multicolumn{2}{c|}{$\mathrm{SSE_{ucz}}$} & \multicolumn{2}{c|}{$\mathrm{SSE_{wer}}$} & \multicolumn{2}{c|}{$\mathrm{SSE_{test}}$}\\\hline
+%Liniowy \rule{0pt}{3.5mm}& \phantom{0}4 & $90$&$1815$ & $70$&$7787$ & \multicolumn{2}{c|}{$-$}\\
+%Neuronowy, $K=1$ & \phantom{0}7 & $10$&$1649$ & $10$&$3895$ & \multicolumn{2}{c|}{$-$}\\
+%Neuronowy, $K=2$ & 13 & $0$&$3282$ & $0$&$3257$ & \multicolumn{2}{c|}{$-$}\\
+%Neuronowy, $K=3$ & 19 & $0$&$2014$ & $0$&$1827$ & $0$&$1468$\\
+%Neuronowy, $K=4$ & 25 & $0$&$1987$ & $0$&$1906$ & \multicolumn{2}{c|}{$-$}\\
+%Neuronowy, $K=5$ & 31 & $0$&$1364$ & $0$&$1971$ & \multicolumn{2}{c|}{$-$}\\
+%Neuronowy, $K=6$ & 37 & $0$&$1340$ & $0$&$2044$ & \multicolumn{2}{c|}{$-$}\\
+%%Neuronowy, $K=7$ & 43 & $0$&$1280$ & $0$&$2939$ & \multicolumn{2}{c|}{$-$}\\
+%\hline
+%\end{tabular}
+%\end{small}
+%\end{table}
+
+\begin{table}
+	[b] \caption{Porównanie liczby parametrów~(LP) i~dok³adnoœci~(SSE) modeli}
+	\label{t_wyrownanie_do_znaku_przecinek1}
+	\centering
+	\sisetup{table-format = 2.4}
+	\begin{small}
+		\begin{tabular}{|l|S[table-format=2]|S|S|S|}
+			\hline
+			\multicolumn{1}{|c|}{Model\rule{0pt}{3.5mm}} & LP & $\mathrm{SSE_{ucz}}$ & $\mathrm{SSE_{wer}}$ & $\mathrm{SSE_{test}}$ \\ \hline
+			Liniowy \rule{0pt}{3.5mm}                    &  4 & 90.1815              & 70.7787              & \textemdash         \\
+			Neuronowy, $K=1$                             &  7 & 10.1649              & 10.3895              & \textemdash         \\
+			Neuronowy, $K=2$                             & 13 & 0.3282               & 0.3257               & \textemdash         \\
+			Neuronowy, $K=3$                             & 19 & 0.2014               & 0.1827               & 0.1468                \\
+			Neuronowy, $K=4$                             & 25 & 0.1987               & 0.1906               & \textemdash         \\
+			Neuronowy, $K=5$                             & 31 & 0.1364               & 0.1971               & \textemdash         \\
+			Neuronowy, $K=6$                             & 37 & 0.1340               & 0.2044               & \textemdash         \\ \hline
+		\end{tabular}
+	\end{small}
+\end{table}
+
+%\begin{table}
+%[b] \caption{Porównanie liczby parametrów~(LP) i~dok³adnoœci~(SSE) modeli}
+%\label{t_wyrownanie_do_znaku_przecinek2}
+%\centering
+%\begin{small}
+%\begin{tabular}{|l|c|r @{$,$} l|r @{$,$} l|r @{$,$} l|}
+%\hline
+%\multicolumn{1}{|c|}{Model\rule{0pt}{3.5mm}} & LP &
+%\multicolumn{2}{c|}{$\mathrm{SSE_{ucz}}$} & \multicolumn{2}{c|}{$\mathrm{SSE_{wer}}$} & \multicolumn{2}{c|}{$\mathrm{SSE_{test}}$}\\\hline
+%Liniowy\rule{0pt}{3.5mm} & \phantom{0}4 & $9$&$1815\cdot10^1$ & $7$&$7787\cdot 10^1$ & \multicolumn{2}{c|}{$-$}\\
+%Neuronowy, $K=1$ & \phantom{0}7 & $1$&$1649\cdot 10^1$ & $1$&$3895\cdot 10^1$ & \multicolumn{2}{c|}{$-$}\\
+%Neuronowy, $K=2$ & 13 & $3$&$2821\cdot 10^{-1}$ & $3$&$2568\cdot 10^{-1}$ & \multicolumn{2}{c|}{$-$}\\
+%Neuronowy, $K=3$ & 19 & $2$&$0137\cdot 10^{-1}$ & $1$&$8273\cdot 10^{-1}$ & $1$&$4682\cdot 10^{-1}$\\
+%Neuronowy, $K=4$ & 25 & $1$&$9868\cdot 10^{-1}$ & $1$&$9063\cdot 10^{-1}$ & \multicolumn{2}{c|}{$-$}\\
+%Neuronowy, $K=5$ & 31 & $1$&$3642\cdot 10^{-1}$ & $1$&$9712\cdot 10^{-1}$ & \multicolumn{2}{c|}{$-$}\\
+%Neuronowy, $K=6$ & 37 & $1$&$3404\cdot 10^{-1}$ & $2$&$0440\cdot 10^{-1}$ & \multicolumn{2}{c|}{$-$}\\
+%%Neuronowy, $K=7$ & 43 & $1$&$2801\cdot 10^{-1}$ & $2$&$9391\cdot 10^{-1}$ & \multicolumn{2}{c|}{$-$}\\
+%\hline
+%\end{tabular}
+%\end{small}
+%\end{table}
+
+\begin{table}
+	[b] \caption{Porównanie liczby parametrów~(LP) i~dok³adnoœci~(SSE) modeli}
+	\label{t_wyrownanie_do_znaku_przecinek2}
+	\centering
+	\sisetup{table-format = 1.4e-1}
+	\begin{small}
+		\begin{tabular}{|l|S[table-format=2]|S|S|S|}
+			\hline
+			\multicolumn{1}{|c|}{Model\rule{0pt}{3.5mm}} & LP & $\mathrm{SSE_{ucz}}$ & $\mathrm{SSE_{wer}}$ & $\mathrm{SSE_{test}}$ \\ \hline
+			Liniowy\rule{0pt}{3.5mm} &  4 & 9.1815e1  & 7.7787e1  & \textemdash\\
+			Neuronowy, $K=1$         &  7 & 1.1649e1  & 1.3895e1  & \textemdash\\
+			Neuronowy, $K=2$         & 13 & 3.2821e-1 & 3.2568e-1 & \textemdash\\
+			Neuronowy, $K=3$         & 19 & 2.0137e-1 & 1.8273e-1 & 1.4682e-1\\
+			Neuronowy, $K=4$         & 25 & 1.9868e-1 & 1.9063e-1 & \textemdash\\
+			Neuronowy, $K=5$         & 31 & 1.3642e-1 & 1.9712e-1 & \textemdash\\
+			Neuronowy, $K=6$         & 37 & 1.3404e-1 & 2.0440e-1 & \textemdash\\ \hline
+		\end{tabular}
+	\end{small}
+\end{table}
+
+%\begin{table}
+%[b] \caption{Porównanie z³o¿onoœci obliczeniowej}
+%\label{t_wyrownanie_do_znaku_przecinek3}
+%\centering
+%\begin{small}
+%\begin{tabular}{|l|c|R{1}{2}|R{1}{2}|R{2}{2}|R{2}{2}|R{2}{2}|R{3}{2}|}
+%	\hline
+%	\multicolumn{1}{|c|}{Algorytm\rule{0pt}{3.25mm}} & \hspace{0.5cm} $N$ \hspace{0.5cm} & \multicolumn{1}{c|}{$N_{\mathrm{u}}=1$} & \multicolumn{1}{c|}{$N_{\mathrm{u}}=2$} & \multicolumn{1}{c|}{$N_{\mathrm{u}}=3$} & \multicolumn{1}{c|}{$N_{\mathrm{u}}=4$} & \multicolumn{1}{c|}{$N_{\mathrm{u}}=5$} & \multicolumn{1}{c|}{$N_{\mathrm{u}}=10$}\tabularnewline
+%\hline
+%NPL\rule{0pt}{3.5mm} & \phantom{0}5 & 0,3954 & 0,5326 & 0,8482 & 1,2868 & 1,9179 & \multicolumn{1}{c|}{$-$}\tabularnewline
+%NO & \phantom{0}5 & 2,6129 & 5,0372 & 8,0029 & 12,6476 & 18,3668 & \multicolumn{1}{c|}{$-$}\tabularnewline
+%NO$_{\mathrm{apr}}$\rule[-1.5mm]{0pt}{3.5mm} & \phantom{0}5 & 2,4654 & 4,3206 & 7,9801 & 15,2479 & 26,5298 & \multicolumn{1}{c|}{$-$}\tabularnewline
+%\hline
+%NPL\rule{0pt}{3.5mm} & 10 & 0,6274 & 0, 7874 & 1,1366 & 1,6201 & 2,3101 & 9,1346\tabularnewline
+%NO & 10 & 5,2040 & 9,0378 & 13,5571 & 19,1675 & 26,2604 & 76,5018\tabularnewline
+%NO$_{\mathrm{apr}}$\rule[-1.5mm]{0pt}{3.5mm} & 10 & 4,3828 & 7,5813 & 12,6279 & 20,0911 & 31, 7747 & 154,1544\tabularnewline
+%\hline
+%\end{tabular}
+%\end{small}
+%\end{table}
+
+\begin{table}
+	[b] \caption{Porównanie z³o¿onoœci obliczeniowej}
+	\label{t_wyrownanie_do_znaku_przecinek3}
+	\centering
+	\sisetup{table-auto-round=true}
+	\begin{small}
+		\begin{tabular}{|l|S[table-format=2]|S[table-format=1.2]|S[table-format=1.2]|S[table-format=2.2]|S[table-format=2.2]|S[table-format=2.2]|S[table-format=3.2]|}
+			\hline
+			\multicolumn{1}{|c|}{Algorytm\rule{0pt}{3.25mm}} & \hspace{0.5cm} $N$ \hspace{0.5cm} & ${N_{\mathrm{u}}=1}$ & ${N_{\mathrm{u}}=2}$ & ${N_{\mathrm{u}}=3}$ & ${N_{\mathrm{u}}=4}$ & ${N_{\mathrm{u}}=5}$ & ${N_{\mathrm{u}}=10}$ \\ \hline
+			NPL\rule{0pt}{3.5mm} & 5 & 0,3954 & 0,5326 & 0,8482 & 1,2868 & 1,9179 & \textemdash \\
+			NO & 5 & 2,6129 & 5,0372 & 8,0029 & 12,6476 & 18,3668 & \textemdash \\
+			NO$_{\mathrm{apr}}$\rule[-1.5mm]{0pt}{3.5mm} & \phantom{0}5 & 2,4654 & 4,3206 & 7,9801 & 15,2479 & 26,5298 & \textemdash \\ \hline
+			NPL\rule{0pt}{3.5mm} & 10 & 0,6274 & 0, 7874 & 1,1366 & 1,6201 & 2,3101 & 9,1346 \\
+			NO & 10 & 5,2040 & 9,0378 & 13,5571 & 19,1675 & 26,2604 & 76,5018 \\		
+			NO$_{\mathrm{apr}}$\rule[-1.5mm]{0pt}{3.5mm} & 10 & 4,3828 & 7,5813 & 12,6279 & 20,0911 & 31, 7747 & 154,1544 \\ \hline
+		\end{tabular}
+	\end{small}
+\end{table}
+
+%\begin{sidewaystable}
+%[b] \caption{Porównanie z³o¿onoœci obliczeniowej}
+%\label{t_wyrownanie_do_znaku_przecinek4}
+%\centering
+%\begin{small}
+%\begin{tabular}{|l|c|R{1}{2}|R{1}{2}|R{2}{2}|R{2}{2}|R{2}{2}|R{3}{2}|R{3}{2}|R{3}{2}|R{3}{2}|}
+%\hline
+%\multicolumn{1}{|c|}{Algorytm\rule{0pt}{3.25mm}} & $N$ & \multicolumn{1}{c|}{$N_{\mathrm{u}}=1$} & \multicolumn{1}{c|}{$N_{\mathrm{u}}=2$} &
+%\multicolumn{1}{c|}{$N_{\mathrm{u}}=3$} &
+%\multicolumn{1}{c|}{$N_{\mathrm{u}}=4$} &
+%\multicolumn{1}{c|}{$N_{\mathrm{u}}=5$} &
+%\multicolumn{1}{c|}{$N_{\mathrm{u}}=10$} &
+%\multicolumn{1}{c|}{$N_{\mathrm{u}}=15$} &
+%\multicolumn{1}{c|}{$N_{\mathrm{u}}=20$} &
+%\multicolumn{1}{c|}{$N_{\mathrm{u}}=30$}\tabularnewline
+%\hline
+%NPL\rule{0pt}{3.5mm} & \phantom{0}5 & 0,3954 & 0,5326 & 0,8482 & 1,2868 & 1,9179 & \multicolumn{1}{c|}{$-$} & \multicolumn{1}{c|}{$-$} & \multicolumn{1}{c|}{$-$} & \multicolumn{1}{c|}{$-$}\tabularnewline
+%NO & \phantom{0}5 & 2,6129 & 5,0372 & 8,0029 & 12,6476 & 18,3668 & \multicolumn{1}{c|}{$-$} & \multicolumn{1}{c|}{$-$} & \multicolumn{1}{c|}{$-$} & \multicolumn{1}{c|}{$-$}\tabularnewline
+%NO$_{\mathrm{apr}}$\rule[-1.5mm]{0pt}{3.5mm} & \phantom{0}5 & 2,4654 &  4,3206 & 7,9801 & 15,2479 & 26,5298 & \multicolumn{1}{c|}{$-$} & \multicolumn{1}{c|}{$-$} & \multicolumn{1}{c|}{$-$} & \multicolumn{1}{c|}{$-$}\tabularnewline
+%\hline
+%\end{tabular}
+%\end{small}
+%\end{sidewaystable}
+
+\begin{sidewaystable}
+	[b] \caption{Porównanie z³o¿onoœci obliczeniowej}
+	\label{t_wyrownanie_do_znaku_przecinek4}
+	\centering
+	\centering
+	\sisetup{table-auto-round=true}
+	\begin{small}
+		\begin{tabular}{|l|S[table-format=2]|S[table-format=1.2]|S[table-format=1.2]|S[table-format=2.2]|S[table-format=2.2]|S[table-format=2.2]|S[table-format=3.2]|S[table-format=3.2]|S[table-format=3.2]|S[table-format=3.2]|}
+			\hline
+			\multicolumn{1}{|c|}{Algorytm\rule{0pt}{3.25mm}} & $N$ & ${N_{\mathrm{u}}=1}$ & ${N_{\mathrm{u}}=2}$ &
+			${N_{\mathrm{u}}=3}$ &
+			${N_{\mathrm{u}}=4}$ &
+			${N_{\mathrm{u}}=5}$ &
+			${N_{\mathrm{u}}=10}$ &
+			${N_{\mathrm{u}}=15}$ &
+			${N_{\mathrm{u}}=20}$ &
+			${N_{\mathrm{u}}=30}$\\
+			\hline
+			NPL\rule{0pt}{3.5mm} & \phantom{0}5 & 0,3954 & 0,5326 & 0,8482 & 1,2868 & 1,9179 & \textemdash & \textemdash & \textemdash & \textemdash\\
+			NO & \phantom{0}5 & 2,6129 & 5,0372 & 8,0029 & 12,6476 & 18,3668 & \textemdash & \textemdash & \textemdash & \textemdash\\
+			NO$_{\mathrm{apr}}$\rule[-1.5mm]{0pt}{3.5mm} & \phantom{0}5 & 2,4654 &  4,3206 & 7,9801 & 15,2479 & 26,5298 & \textemdash & \textemdash & \textemdash & \textemdash\\
+			\hline
+		\end{tabular}
+	\end{small}
+\end{sidewaystable}

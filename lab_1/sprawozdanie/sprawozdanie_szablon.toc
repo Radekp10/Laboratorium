@@ -1,0 +1,27 @@
+\contentsline {chapter}{\numberline {1\relax .\enspace }Wst\k ep}{2}%
+\contentsline {chapter}{\numberline {2\relax .\enspace }Wzory matematyczne}{3}%
+\contentsline {section}{\numberline {2.1\relax .\enspace }Sta\IeC {\l }e i\nobreakspace {}zmienne, indeksowanie}{3}%
+\contentsline {section}{\numberline {2.2\relax .\enspace }Wektory}{3}%
+\contentsline {section}{\numberline {2.3\relax .\enspace }Macierze}{4}%
+\contentsline {section}{\numberline {2.4\relax .\enspace }Wi\k eksze wyra\.zenia matematyczne}{4}%
+\contentsline {chapter}{\numberline {3\relax .\enspace }Tabele}{5}%
+\contentsline {chapter}{\numberline {4\relax .\enspace }Rysunki}{7}%
+\contentsline {section}{\numberline {4.1\relax .\enspace }Schematy blokowe}{7}%
+\contentsline {section}{\numberline {4.2\relax .\enspace }Funkcje statyczne}{8}%
+\contentsline {section}{\numberline {4.3\relax .\enspace }Wyniki symulacji i\nobreakspace {}eksperyment\'ow}{10}%
+\contentsline {section}{\numberline {4.4\relax .\enspace }Kolory}{17}%
+\contentsline {section}{\numberline {4.5\relax .\enspace }Lokalizacja rysunk\'ow (i\nobreakspace {}tabel)}{20}%
+\contentsline {chapter}{\numberline {5\relax .\enspace }Listingi program\'ow}{21}%
+\contentsline {chapter}{Bibliografia}{22}%
+\contentsline {chapter}{\numberline {A\relax .\enspace }Uwagi do wykonywania sprawozda\'n}{23}%
+\contentsline {section}{\numberline {A.1\relax .\enspace }Kodowanie znak\'ow}{23}%
+\contentsline {section}{\numberline {A.2\relax .\enspace }Nie nale\.zy u\.zywa\'c zwrot\'ow w cudzys\IeC {\l }owiu i narzeka\'n}{23}%
+\contentsline {section}{\numberline {A.3\relax .\enspace }Przecinki zamiast kropek i jednostki}{23}%
+\contentsline {section}{\numberline {A.4\relax .\enspace }Prosty eksport wykres\'ow: \texttt {matlab2tikz}}{24}%
+\contentsline {section}{\numberline {A.5\relax .\enspace }Wstawianie kodu programu i jego zasadno\'s\'c}{25}%
+\contentsline {section}{\numberline {A.6\relax .\enspace }Warunki stosowania \texttt {plot} i \texttt {stairs}}{26}%
+\contentsline {section}{\numberline {A.7\relax .\enspace }Dodatkowe uwagi do wykresach}{26}%
+\contentsline {section}{\numberline {A.8\relax .\enspace }Przeprowadzanie eksperyment\'ow}{27}%
+\contentsline {section}{\numberline {A.9\relax .\enspace }Krytyczne podej\'scie do om\'owienia wynik\'ow}{27}%
+\contentsline {section}{\numberline {A.10\relax .\enspace }Nieustanna archiwizacja i oddelegowana w czasie analizy}{27}%
+\contentsline {section}{\numberline {A.11\relax .\enspace }Om\'owienie wynik\'ow a dobieranie parametr\'ow}{27}%
