@@ -6,29 +6,31 @@ clear;
 Upp = 1.1; %sygnal wejsciowy w stanie ustalonym
 Ypp = 2; %sygnal wyjsciowy w stanie ustalonym
 
-%Ograniczenia wartosci sygnalu sterujacego
+%Ograniczenia wartosci sygnalu sterowania
 Umin = 0.9;
 Umax = 1.3;
 
 Tp = 0.5; %okres probkowania
 T = 100; %czas symulacji
+opoznienie = 11;
 
-T1 = 10; %czas skoku wartosci sygnalu sterujacego
+Ts = 10; %czas skoku wartosci sygnalu sterujacego
 Us = 1.2;
-odp_skok;
 
-wy1 = symulacja_obiektu3Y(Upp, Upp, Ypp, Ypp);
-wy2 = symulacja_obiektu3Y(Upp, Upp, wy1, Ypp);
+U_cale = Upp;
+Y = Ypp;
 
-U_cale = [Upp, Upp];
-Y = [wy1, wy2];
+%Opoznienie
+for k = 2:opoznienie
+    U_cale = [U_cale, Upp];
+    Y = [Y, Ypp];
+end
 
-U_p = U_cale(end);
-U = Upp;
+U = U_cale(end);
 
 %Przebieg
-for i = 3:(T/Tp)
-    if i == T1/Tp
+for k = opoznienie+1:(T/Tp)
+    if k == Ts/Tp
         U = Us;
     end
     
@@ -40,20 +42,22 @@ for i = 3:(T/Tp)
     end
     
     U_cale = [U_cale, U];
-    
-    Y = [Y, symulacja_obiektu3Y(U, U_p, wy2, wy1)];
-    wy1 = wy2;
-    wy2 = Y(end);
+    Y = [Y, symulacja_obiektu3Y(U_cale(k-10), U_cale(k-11), Y(k-1), Y(k-2))];
 end
 
 figure;
-plot(1:T/Tp, Y)
+plot(1:T/Tp, Y*10)
 title("Sygnal wyjsciowy");
 
 figure;
-plot(1:T/Tp, U_cale)
+stairs(1:T/Tp, U_cale/(Us-Upp)-Upp*10)
 title("Sygnal wejsciowy");
 
+%Zakladam ze odpowiedz skokowa ustabilizowala sie przy 190 probce (wartosc po
+%ustabilizowaniu 23.18)
+
+odp_skok = (Y(Ts/Tp:190)-Ypp)/(Us-Upp);
+
 figure;
-plot(odp_skok)
+plot(Ts/Tp:190, odp_skok)
 title("Odpowiedz skokowa");

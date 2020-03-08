@@ -3,23 +3,44 @@
 
 clear;
 
-Upp = 1.1;
-Ypp = 2;
+%Stan ustalony
+Upp = 1.1; %sygnal wejsciowy w stanie ustalonym
+Ypp = 2; %sygnal wyjsciowy w stanie ustalonym
+
+%Ograniczenia wartosci sygnalu sterowania
+Umin = 0.9;
+Umax = 1.3;
 
 Tp = 0.5; %okres probkowania
 T = 200; %czas symulacji
+opoznienie = 11;
 
-wy1 = symulacja_obiektu3Y(Upp, Upp, Ypp, Ypp);
-wy2 = symulacja_obiektu3Y(Upp, Upp, wy1, Ypp);
+U_cale = Upp;
+Y = Ypp;
 
-y = [wy1, wy2];
-
-for i = 3:T/Tp
-    y = [y, symulacja_obiektu3Y(Upp, Upp, wy2, wy1)];
-    wy1 = wy2;
-    wy2 = y(end);
+%Opoznienie
+for k = 2:opoznienie
+    U_cale = [U_cale, Upp];
+    Y = [Y, Ypp];
 end
 
-plot(1:T/Tp, y)
+U = U_cale(end);
 
-%Mozemy zauwazyc stan ustalony
+%Przebieg
+for k = opoznienie+1:(T/Tp)
+    
+    %Ograniczenia
+    if (U < Umin)
+        U = Umin;
+    elseif (U > Umax)
+        U = Umax;
+    end
+    
+    U_cale = [U_cale, U];
+    Y = [Y, symulacja_obiektu3Y(U_cale(k-10), U_cale(k-11), Y(k-1), Y(k-2))];
+end
+
+plot(1:T/Tp, Y)
+
+%Mozemy zauwazyc stan ustalony (wartosc wyjscia nie zmienia sie na calym
+%przebiegu
