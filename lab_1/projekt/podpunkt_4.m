@@ -1,16 +1,14 @@
 %Wyznaczamy symulacyjnie odpowiedz skokowa dla procesu
 
-%Przed uruchomieniem skryptu trzeba uruchomic skrypt podpunkt_3.m
-% podpunkt_3;
-clearvars -except odp_skok
-s = odp_skok;
+odp_skok = load('odp_skok.mat');
+s = odp_skok.odp_skok;
 
 %Stan ustalony
 Upp = 1.1; %sygnal wejsciowy w stanie ustalonym
 Ypp = 2; %sygnal wyjsciowy w stanie ustalonym
 
 %Ograniczenia: 0 - wylaczone, 1 - wlaczone
-ograniczenia = 0;
+ograniczenia = 1;
 %Ograniczenia wartosci sygnalu sterowania
 Umin = 0.9;
 Umax = 1.3;
@@ -22,7 +20,7 @@ T = 400; %czas symulacji
 opoznienie = 11;
 
 %Regulator: 0 - pid, inne - dmc
-piddmc = 1;
+piddmc = 0;
 
 %Parametry regulatora PID
 if(piddmc == 0)
@@ -49,7 +47,7 @@ end
 %Parametry dobierane przy wart zad 2.1 z punktu pracy
 
 %Parametry regulatora DMC
-if(piddmc ~= 0) 
+if(piddmc ~= 0)
     %Horyzonty
     D=length(odp_skok);
     N=length(odp_skok);
@@ -57,28 +55,28 @@ if(piddmc ~= 0)
     
     %Wspolczynnik kary za przyrosty sterowania
     lambda=1;
-
+    
     %Generacja macierzy
     M=zeros(N,Nu);
     for i=1:N
-       for j=1:Nu
-          if (i>=j)
-             M(i,j)=s(i-j+1);
-          end
-       end
+        for j=1:Nu
+            if (i>=j)
+                M(i,j)=s(i-j+1);
+            end
+        end
     end
-
+    
     MP=zeros(N,D-1);
     for i=1:N
-       for j=1:D-1
-          if i+j<=D
-             MP(i,j)=s(i+j)-s(j);
-          else
-             MP(i,j)=s(D)-s(j);
-          end    
-       end
+        for j=1:D-1
+            if i+j<=D
+                MP(i,j)=s(i+j)-s(j);
+            else
+                MP(i,j)=s(D)-s(j);
+            end
+        end
     end
-
+    
     I=eye(Nu);
     K=((M'*M+lambda*I)^-1)*M';
     ku=K(1,:)*MP;
@@ -89,7 +87,7 @@ U_cale = Upp;
 dU_cale = 0;
 Y = Ypp;
 
-Y_zad = 2.1;
+Y_zad = 2.3;
 e = Y_zad-Y;
 
 %Opoznienie
@@ -105,7 +103,6 @@ U = U_cale(end);
 %Przebieg
 for k = opoznienie+1:(T/Tp)
     e(k) = Y_zad-Y(k-1);
-    
     %Regulator PID
     if(piddmc == 0)
         dU = r2*e(k-2) + r1*e(k-1) + r0*e(k);
@@ -152,8 +149,5 @@ stairs(U_cale);
 title("Sygnal wejsciowy");
 
 figure;
-plot(1:T/Tp, Y)
+plot(1:T/Tp, Y);
 title("Sygnal wyjsciowy");
-
-%Parametry regulatora PID by?y dobierane metod? inzynierska (doswiadczalna)
-%K=1.1 rozbiezne 
